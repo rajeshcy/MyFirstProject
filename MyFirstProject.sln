@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsharpPractice", "CsharpPra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datastructure", "Datastructure\Datastructure.csproj", "{3C1F170C-9CCD-4BEE-BD7A-B4D504038678}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OopsUsingCSharp", "OopsUsingCSharp\OopsUsingCSharp.csproj", "{512F0E23-96AE-478C-8355-63CA1E28783E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3C1F170C-9CCD-4BEE-BD7A-B4D504038678}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C1F170C-9CCD-4BEE-BD7A-B4D504038678}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C1F170C-9CCD-4BEE-BD7A-B4D504038678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{512F0E23-96AE-478C-8355-63CA1E28783E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{512F0E23-96AE-478C-8355-63CA1E28783E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{512F0E23-96AE-478C-8355-63CA1E28783E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{512F0E23-96AE-478C-8355-63CA1E28783E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
