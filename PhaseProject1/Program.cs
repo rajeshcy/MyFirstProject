@@ -82,11 +82,7 @@ namespace PhaseProject1
             {
                
             }
-            static void Display()
-            {
-
-            }
-
+           
             
 
         }
