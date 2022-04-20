@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PhaseProject1
 {
-    internal class Teacher : IComparable<Teacher>
+    internal class Teacher 
     {
         private string id;
         private string firstname;
@@ -40,10 +40,6 @@ namespace PhaseProject1
             get { return section; }
             set { section = value; }
         }
-        public int CompareTo(Teacher T)
-        {
-            return this.ID.CompareTo(T.ID);
-        }
-
+        
     }
 }

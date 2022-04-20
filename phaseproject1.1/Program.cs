@@ -11,53 +11,48 @@ namespace PhaseProject1
     {
         static void Main(string[] args)
         {
+            List<Teacher> listteacher = new List<Teacher>();
+            string teacherfile = "d:\\wipro\\.net\\teachers.txt";
+            List<string> arrteacherclass = File.ReadAllLines(teacherfile).ToList();
+            foreach (string line in arrteacherclass)
+            {
+                string[] l = line.Split(',');
+                Teacher teacherclass = new Teacher();
+                teacherclass.ID = l[0];
+                teacherclass.FirstName = l[1];
+                teacherclass.LastName = l[2];
+                teacherclass.Cclass = l[3];
+                teacherclass.Section = l[4];
+                listteacher.Add(teacherclass);
+            }
             //string teacherfile = "d:\\wipro\\.net\\teachers.txt";
             //AddRecord("7", "Ishan", "Kishan", "8", "D",teacherfile);
             //AddRecord("6", "Rajesh", "Krishnan", "10", "C", teacherfile);
             //AddRecord("9", "Girish", "Karnad", "12", "A", teacherfile);
 
             //AddRecord("10", "awesome", "Patil", "6", "A", teacherfile);
-            //Display();
-            //SearchByID("100");
-            //SearchByFirstName("Rajesh");
+
+            Display(listteacher);
+            //SearchByID("2",listteacher);
+            //SearchByFirstName("Girish", listteacher);
             //DeleteProfile("Krishnan",3,teacherfile);
 
-            //UpdatRecord("Kishan",teacherfile,3, "2", "Awesome", "Patil", "50", "Z");
-            SortByID();
-
-
+            //UpdateRecord("Kishan",teacherfile,3, "2", "Awesome", "Patil", "50", "Z");
+            SortByID(listteacher);
+            SortByFirstName(listteacher);
+            SortByLastName(listteacher);
+            SortByClass(listteacher);
+            SortBySection(listteacher);
         }
-        public static void Display()
+        public static void Display(List<Teacher> listteacher)
         {
-            try
-            {
-                List<Teacher> listteacher = new List<Teacher>();
-                string teacherfile = "d:\\wipro\\.net\\teachers.txt";
-
-                List<string> arrteacherclass = File.ReadAllLines(teacherfile).ToList();
-                Console.WriteLine("Teacher Record is: ");
-                Console.WriteLine();
-                foreach (string line in arrteacherclass)
-                {
-                    string[] l = line.Split(',');
-                    Teacher teacherclass = new Teacher();
-                    teacherclass.ID = l[0];
-                    teacherclass.FirstName = l[1];
-                    teacherclass.LastName = l[2];
-                    teacherclass.Cclass = l[3];
-                    teacherclass.Section = l[4];
-                    listteacher.Add(teacherclass);
-                }
-                foreach (Teacher tea in listteacher)
+            Console.WriteLine("Teacher Record without sorting :");
+            Console.WriteLine();
+            foreach (Teacher tea in listteacher)
                 {
                     Console.WriteLine($"{tea.ID} {tea.FirstName} {tea.LastName} {tea.Cclass} {tea.Section}");
                 }
                 Console.WriteLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Cannot Display the Record", ex);
-            }
         }
 
         public static void AddRecord(string ID, string FirstName, string LastName, string Cclass, string Section, string filepath)
@@ -76,59 +71,20 @@ namespace PhaseProject1
             }
         }
 
-        public static void SearchByID(Object ob)
+        public static void SearchByID(Object ob, List<Teacher> listteacher)
         {
-            try
+            foreach (Teacher tea in listteacher)
             {
-                List<Teacher> listteacher = new List<Teacher>();
-                string teacherfile = "d:\\wipro\\.net\\teachers.txt";
-
-                List<string> arrteacherclass = File.ReadAllLines(teacherfile).ToList();
-                foreach (string line in arrteacherclass)
-                {
-                    string[] l = line.Split(',');
-                    Teacher teacherclass = new Teacher();
-                    teacherclass.ID = l[0];
-                    teacherclass.FirstName = l[1];
-                    teacherclass.LastName = l[2];
-                    teacherclass.Cclass = l[3];
-                    teacherclass.Section = l[4];
-                    listteacher.Add(teacherclass);
-                }
-                foreach (Teacher tea in listteacher)
-                {
-                    bool v = tea.ID.Equals(ob);
-                    if (v == true)
-                        Console.WriteLine($"{tea.ID} {tea.FirstName} {tea.LastName} {tea.Cclass} {tea.Section}");
-                }
-                Console.WriteLine();
+                bool v = tea.ID.Equals(ob);
+                if (v == true)
+                    Console.WriteLine($"{tea.ID} {tea.FirstName} {tea.LastName} {tea.Cclass} {tea.Section}");
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            Console.WriteLine();  
         }
 
-        public static void SearchByFirstName(Object ob)
+        public static void SearchByFirstName(Object ob, List<Teacher> listteacher)
         {
-            try
-            {
-                List<Teacher> listteacher = new List<Teacher>();
-
-                string teacherfile = "D:\\wipro\\.net\\teachers.txt";
-
-                List<string> arrteacherclass = File.ReadAllLines(teacherfile).ToList();
-                foreach (string line in arrteacherclass)
-                {
-                    string[] l = line.Split(',');
-                    Teacher teacherclass = new Teacher();
-                    teacherclass.ID = l[0];
-                    teacherclass.FirstName = l[1];
-                    teacherclass.LastName = l[2];
-                    teacherclass.Cclass = l[3];
-                    teacherclass.Section = l[4];
-                    listteacher.Add(teacherclass);
-                }
+           
                 foreach (Teacher tea in listteacher)
                 {
                     bool v = tea.FirstName.Equals(ob);
@@ -136,11 +92,7 @@ namespace PhaseProject1
                         Console.WriteLine($"{tea.ID} {tea.FirstName} {tea.LastName} {tea.Cclass} {tea.Section}");
                 }
                 Console.WriteLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("No such teacher is found", ex);
-            }
+                    
         }
 
         public static void DeleteProfile(string SearchTerm, int PositionOfSearchTerm, string filepath)
@@ -175,13 +127,11 @@ namespace PhaseProject1
 
         }
 
-        public static void UpdatRecord(string SearchTerm, string filepath, int PositionOfSearchTerm, string fieldOne, string fieldTwo, string fieldThree, string fieldFour, string fieldFive)
+        public static void UpdateRecord(string SearchTerm, string filepath, int PositionOfSearchTerm, string fieldOne, string fieldTwo, string fieldThree, string fieldFour, string fieldFive)
         {
-
             PositionOfSearchTerm--;
             string tempfile = "temp.txt";
             bool edited = false;
-
             try
             {
                 string[] lines = System.IO.File.ReadAllLines(@filepath);
@@ -203,12 +153,10 @@ namespace PhaseProject1
                             edited = true;
                         }
                     }
-
                 }
                 File.Delete(@filepath);
                 System.IO.File.Move(tempfile, filepath);
                 Console.WriteLine("Record Edited");
-
             }
             catch (Exception ex)
             {
@@ -216,26 +164,12 @@ namespace PhaseProject1
                 throw new ApplicationException("Program did not work", ex);
             }
         }
-        public static void SortByID()
+        public static void SortByID(List<Teacher> listteacher)
         {
-            List<Teacher> listteacher = new List<Teacher>();
-            string teacherfile = "d:\\wipro\\.net\\teachers.txt";
-
-            List<string> arrteacherclass = File.ReadAllLines(teacherfile).ToList();
-          
-            foreach (string line in arrteacherclass)
-            {
-                string[] l = line.Split(',');
-                Teacher teacherclass = new Teacher();
-                teacherclass.ID = l[0];
-                teacherclass.FirstName = l[1];
-                teacherclass.LastName = l[2];
-                teacherclass.Cclass = l[3];
-                teacherclass.Section = l[4];
-                listteacher.Add(teacherclass);
-            }
-            listteacher.Sort();
-            Console.WriteLine("Teacher Record sorted based on ID is: ");
+            
+            SortByID sortbyid = new SortByID();
+            listteacher.Sort(sortbyid);
+            Console.WriteLine("Teacher Record sorted based on id is: ");
             Console.WriteLine();
             
 
@@ -245,6 +179,59 @@ namespace PhaseProject1
             }
             Console.WriteLine();
 
+        }
+        public static void SortByFirstName(List<Teacher> listteacher)
+        {
+            SortByFirstName sortbyfirstname = new SortByFirstName();
+            listteacher.Sort(sortbyfirstname);
+            Console.WriteLine("Teacher Record sorted based on First Name is: ");
+            Console.WriteLine();
+
+            foreach (Teacher tea in listteacher)
+            {
+                Console.WriteLine($"{tea.ID} {tea.FirstName} {tea.LastName} {tea.Cclass} {tea.Section}");
+            }
+            Console.WriteLine();
+        }
+        public static void SortByLastName(List<Teacher> listteacher)
+        {
+            SortByLastName sortbylastname = new SortByLastName();
+            listteacher.Sort(sortbylastname);
+            Console.WriteLine("Teacher Record sorted based on Last Name is: ");
+            Console.WriteLine();
+
+
+            foreach (Teacher tea in listteacher)
+            {
+                Console.WriteLine($"{tea.ID} {tea.FirstName} {tea.LastName} {tea.Cclass} {tea.Section}");
+            }
+            Console.WriteLine();
+        }
+        public static void SortByClass(List<Teacher> listteacher)
+        {
+            SortByCclass sortbyclass = new SortByCclass();
+            listteacher.Sort(sortbyclass);
+            Console.WriteLine("Teacher Record sorted based on Class is: ");
+            Console.WriteLine();
+
+            foreach (Teacher tea in listteacher)
+            {
+                Console.WriteLine($"{tea.ID} {tea.FirstName} {tea.LastName} {tea.Cclass} {tea.Section}");
+            }
+            Console.WriteLine();
+        }
+        public static void SortBySection(List<Teacher> listteacher)
+        {
+            SortBySection sortbysection = new SortBySection();
+            listteacher.Sort(sortbysection);
+            Console.WriteLine("Teacher Record sorted based on Section is: ");
+            Console.WriteLine();
+
+            foreach (Teacher tea in listteacher)
+            {
+                Console.WriteLine($"{tea.ID} {tea.FirstName} {tea.LastName} {tea.Cclass} {tea.Section}");
+            }
+            Console.WriteLine();
         }
     }
  }
