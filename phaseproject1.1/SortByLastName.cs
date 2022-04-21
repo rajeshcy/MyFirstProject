@@ -10,6 +10,5 @@ namespace PhaseProject1
         {
             return x.LastName.CompareTo(y.LastName);
         }
-
     }
 }

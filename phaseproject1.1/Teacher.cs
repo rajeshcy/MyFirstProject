@@ -11,7 +11,6 @@ namespace PhaseProject1
         private string lastname;
         private string cclass;
         private string section;
-
         public string ID
         {
             get { return id; }
@@ -36,7 +35,6 @@ namespace PhaseProject1
         {
             get { return section; }
             set { section = value; }
-        }
-        
+        }    
     }
 }
