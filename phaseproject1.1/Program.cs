@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PhaseProject1
 {
@@ -25,28 +23,99 @@ namespace PhaseProject1
                 teacherclass.Section = l[4];
                 listteacher.Add(teacherclass);
             }
-            //string teacherfile = "d:\\wipro\\.net\\teachers.txt";
-            //AddRecord("7", "Ishan", "Kishan", "8", "D",teacherfile);
-            //AddRecord("6", "Rajesh", "Krishnan", "10", "C", teacherfile);
-            //AddRecord("9", "Girish", "Karnad", "12", "A", teacherfile);
 
-            //AddRecord("10", "awesome", "Patil", "6", "A", teacherfile);
+            Console.WriteLine(
+                "Enter 1 to display unsorted teacher record\n" +
+                "Enter 2 to add teacher profile to teacher record\n" +
+                "Enter 3 to search teacher record by ID\n" +
+                "Enter 4 to search teacher record by First Name\n" +
+                "Enter 5 to update teacher profile\n" +
+                "Enter 6 to sort teacher record by ID and display\n" +
+                "Enter 7 to sort teacher record by First Name and display\n" +
+                "Enter 8 to sort teacher record by Last Name and display\n" +
+                "Enter 9 to sort teacher record by class and display\n" +
+                "Enter 10 to sort record by Section and display\n" +
+                "Enter 11 to delete teacher profile from teacher record\n");
+            Console.Write("Enter operation number: ");
 
-            Display(listteacher);
-            //SearchByID("2",listteacher);
-            //SearchByFirstName("Girish", listteacher);
-            //DeleteProfile("Krishnan",3,teacherfile);
-
-            //UpdateRecord("Kishan",teacherfile,3, "2", "Awesome", "Patil", "50", "Z");
-            SortByID(listteacher);
-            SortByFirstName(listteacher);
-            SortByLastName(listteacher);
-            SortByClass(listteacher);
-            SortBySection(listteacher);
+            int number = Convert.ToInt16(Console.ReadLine());
+            Console.WriteLine();
+            switch (number)
+            {
+                case 1:
+                    Display(listteacher);
+                    break;
+                case 2:
+                    Console.Write("Enter ID: ");
+                    string id = Console.ReadLine();
+                    Console.Write("Enter First Name: ");
+                    string firstname = Console.ReadLine();
+                    Console.Write("Enter Last Name: ");
+                    string lastname = Console.ReadLine();
+                    Console.Write("Enter Class: ");
+                    string cclass = Console.ReadLine();
+                    Console.Write("Enter Section: ");
+                    string section = Console.ReadLine();
+                    AddRecord(id, firstname,lastname, cclass,section,teacherfile);
+                    Console.WriteLine("Profile is successfully added to the Teacher record\n");
+                    break;
+                case 3:
+                    Console.Write("Enter teacher ID: ");
+                    string iD = Console.ReadLine();
+                    SearchByID(iD , listteacher);
+                    break;
+                case 4:
+                    Console.Write("Enter First Name: ");
+                    string fname = Console.ReadLine();
+                    SearchByFirstName(fname, listteacher);
+                    break;
+                case 5:
+                    Console.Write("Enter the term you are looking for: ");
+                    string searchterm = Console.ReadLine();
+                    Console.Write("Enter the position of term you are looking for: ");
+                    int positionofsearchterm = Convert.ToInt16(Console.ReadLine());
+                    Console.Write("Enter new ID: ");
+                    string new_id = Console.ReadLine();
+                    Console.Write("Enter new First Name: ");
+                    string new_firstname = Console.ReadLine();
+                    Console.Write("Enter new Last Name: ");
+                    string new_lastname = Console.ReadLine();
+                    Console.Write("Enter new Class: ");
+                    string new_cclass = Console.ReadLine();
+                    Console.Write("Enter new Section: ");
+                    string new_section = Console.ReadLine();
+                    UpdateRecord(searchterm, teacherfile, positionofsearchterm,new_id,new_firstname,new_lastname,new_cclass,new_section);
+                    break;
+                case 6:
+                    SortByID(listteacher);
+                    break;
+                case 7:
+                    SortByFirstName(listteacher);
+                    break;
+                case 8:
+                    SortByLastName(listteacher);
+                    break;
+                case 9:
+                    SortByClass(listteacher);
+                    break;
+                case 10:
+                    SortBySection(listteacher);
+                    break;
+                case 11:
+                    Console.WriteLine("Enter the term you are looking for: ");
+                    string deleteterm = Console.ReadLine();
+                    Console.WriteLine("Enter the position of term you are looking for: ");
+                    int positionofdeleteterm = Convert.ToInt16(Console.ReadLine());
+                    DeleteProfile(deleteterm, positionofdeleteterm, teacherfile);
+                    break;
+                default:
+                    Console.WriteLine("Enter a valid operation number");
+                    break;
+            }  
         }
         public static void Display(List<Teacher> listteacher)
         {
-            Console.WriteLine("Teacher Record without sorting :");
+            Console.WriteLine("Unsorted Teacher record :");
             Console.WriteLine();
             foreach (Teacher tea in listteacher)
                 {
@@ -68,11 +137,13 @@ namespace PhaseProject1
             catch (Exception ex)
             {
                 throw new ApplicationException("Cannot add teacher new record", ex);
-            }
+            }   
         }
 
         public static void SearchByID(Object ob, List<Teacher> listteacher)
         {
+            Console.WriteLine();
+            Console.WriteLine($"Teacher profiles of ID {ob} :");
             foreach (Teacher tea in listteacher)
             {
                 bool v = tea.ID.Equals(ob);
@@ -84,7 +155,8 @@ namespace PhaseProject1
 
         public static void SearchByFirstName(Object ob, List<Teacher> listteacher)
         {
-           
+            Console.WriteLine();
+            Console.WriteLine($"Teacher profiles of First Name {ob} : ");
                 foreach (Teacher tea in listteacher)
                 {
                     bool v = tea.FirstName.Equals(ob);
@@ -100,7 +172,6 @@ namespace PhaseProject1
 
             PositionOfSearchTerm--;
             string tempfile = "temp.txt";
-
             try
             {
                 string[] lines = System.IO.File.ReadAllLines(@filepath);
@@ -108,23 +179,19 @@ namespace PhaseProject1
                 {
                     string[] fields = lines[i].Split(',');
                     bool v = fields[PositionOfSearchTerm].Equals(SearchTerm);
-
                     if (v == false)
                     {
                         AddRecord(fields[0], fields[1], fields[2], fields[3], fields[4], @tempfile);
                     }
-
                 }
                 File.Delete(@filepath);
                 System.IO.File.Move(tempfile, filepath);
-
-
             }
             catch (Exception ex)
             {
                 throw new Exception("Cannot delete file", ex);
             }
-
+            Console.WriteLine("Profile is deleted");
         }
 
         public static void UpdateRecord(string SearchTerm, string filepath, int PositionOfSearchTerm, string fieldOne, string fieldTwo, string fieldThree, string fieldFour, string fieldFive)
@@ -149,14 +216,13 @@ namespace PhaseProject1
                         if (!edited)
                         {
                             AddRecord(fieldOne, fieldTwo, fieldThree, fieldFour, fieldFive, @tempfile);
-                            Console.WriteLine("Edited him");
                             edited = true;
                         }
                     }
                 }
                 File.Delete(@filepath);
                 System.IO.File.Move(tempfile, filepath);
-                Console.WriteLine("Record Edited");
+                Console.WriteLine("Teacher profile updated successfully ");
             }
             catch (Exception ex)
             {

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PhaseProject1
 {
@@ -10,7 +8,7 @@ namespace PhaseProject1
     {
         int IComparer<Teacher>.Compare(Teacher x, Teacher y)
         {
-            return x.Cclass.CompareTo(y.Cclass);
+            return int.Parse(x.Cclass).CompareTo(int.Parse((y.Cclass)));
         }
     }
 }
