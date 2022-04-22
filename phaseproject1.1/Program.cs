@@ -227,6 +227,7 @@ namespace PhaseProject1
 
         public static void UpdateRecord(string SearchTerm, string filepath, int PositionOfSearchTerm, string fieldOne, string fieldTwo, string fieldThree, string fieldFour, string fieldFive)
         {
+
             PositionOfSearchTerm--;
             string tempfile = "temp.txt";
             bool edited = false;
