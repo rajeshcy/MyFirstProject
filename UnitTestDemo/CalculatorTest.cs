@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +23,14 @@ namespace UnitTestDemo
             var sum = Calculator.Add(a, b);
 
             //Assert
-            Assert.AreEqual(expected, sum);
+            //Assert.AreEqual(expected, sum);
+            Assert.That(sum, Is.EqualTo(expected));
         }
         public void AllOperationsTest()
         {
             Assert.AreEqual(18, Calculator.Add(23, -5));
             Assert.AreEqual(-115, Calculator.Multiply(23, -5));
-            Assert.AreEqual(28, Calculator.Subtract(23, -5));
+            //Assert.AreEqual(28, Calculator.Subtract(23, -5));
             Assert.AreEqual(-4, Calculator.Divide(23, -5));
         }
         [Test]
@@ -79,6 +81,72 @@ namespace UnitTestDemo
         {
             return Calculator.Multiply(n1, n2);
             
+        }
+        [TestCaseSource(nameof(MulCasesFromFile))]
+         public int MultiplyTest5(int n1, int n2)
+        {
+            return Calculator.Multiply(n1, n2);
+        }
+        public static List<TestCaseData> MulCasesFromFile
+        {
+            get
+            {
+                var testCases = new List<TestCaseData>();
+
+                using (var fs = File.OpenRead("C:\\Users\\rajes\\source\\repos\\MyFirstProject\\UnitTestDemo\\MulCases.txt"))
+                using (var sr = new StreamReader(fs))
+                {
+                    string line = string.Empty;
+                    while (line != null)
+                    {
+                        line = sr.ReadLine();
+                        if (!string.IsNullOrEmpty(line))
+                        {
+                            string[] split = line.Split(new char[] { ',' },
+                                StringSplitOptions.None);
+
+                            int answer = Convert.ToInt32(split[0]);
+                            int a = Convert.ToInt32(split[1]);
+                            int b = Convert.ToInt32(split[2]);
+
+                            var testCase = new TestCaseData(a, b).Returns(answer);
+                            testCases.Add(testCase);
+                        }
+                    }
+                }
+
+                return testCases;
+            }
+        }
+
+        [Test]
+        [Category("DivideByZero")]
+        public void DivideByZeroTest1()
+        {
+            Assert.Throws(typeof(DivideByZeroException), () => Calculator.Divide(23, 0));
+        }
+
+        [Test]
+        [Category("DivideByZero")]
+        [Description("Test to verify DivideByZero scenarios")]
+        [Author("Wipro")]
+        public void DivideByZeroTest1B()
+        {
+            Assert.Throws<DivideByZeroException>(() => Calculator.Divide(23, 0));
+        }
+
+        [TestCase(23, 0, typeof(DivideByZeroException))]
+        [Category("DivideByZero")]
+        public void DivideByZeroTest2(int n1, int n2, Type expectedException)
+        {
+            Assert.Throws(expectedException, () => Calculator.Divide(n1, n2));
+        }
+
+        [TestCase(23, 0, ExpectedResult = typeof(DivideByZeroException))]
+        [Category("DivideByZero")]
+        public Type DivideByZeroTest3(int n1, int n2)
+        {
+            return Assert.Catch(() => Calculator.Divide(n1, n2)).GetType();
         }
     }
 }
