@@ -15,6 +15,27 @@ namespace SpecFlowTests.SUT
         {
             return FirstNumber + SecondNumber;
         }
+        public int Subtract()
+        {
+            return SecondNumber - FirstNumber;
+        }
+        public int Multiply()
+        {
+            return SecondNumber*FirstNumber;
+        }
+
+        public int Divide()
+        {
+            return  FirstNumber/SecondNumber;
+        }
+
+        public int DividedByZero()
+        {
+            if (FirstNumber == 0)
+                return 0;
+            else
+                return SecondNumber/FirstNumber;
+        }
     }
 }
     

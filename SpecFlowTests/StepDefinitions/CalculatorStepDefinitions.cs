@@ -36,7 +36,31 @@ namespace SpecFlowTests.StepDefinitions
         {
             _result = _calculator.Add();
         }
-      
+
+        [When(@"we find difference of the two numbers")]
+        public void WhenWeFindDifferenceOfTheTwoNumbers()
+        {
+            _result = _calculator.Subtract();
+        }
+
+        [When(@"the two numbers are multiplied")]
+        public void thetwonumbersaremultiplied()
+        {
+            _result = _calculator.Multiply();
+        }
+
+        [When(@"the division is done")]
+        public void thedivisionisdone()
+        {
+            _result = _calculator.Divide();
+        }
+
+        [When(@"Divided By Zero")]
+        public void DividedByZero()
+        {
+            _result = _calculator.DividedByZero();
+        }
+
         [Then("the result should be (.*)")]
         public void ThenTheResultShouldBe(int result)
         {
